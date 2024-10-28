@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.21-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.22-alpine AS builder
 LABEL maintainer="nekohasekai <contact-git@sekai.icu>"
 COPY . /go/src/github.com/sagernet/serenity
 WORKDIR /go/src/github.com/sagernet/serenity
@@ -23,4 +23,5 @@ RUN set -ex \
     && apk add bash tzdata ca-certificates \
     && rm -rf /var/cache/apk/*
 COPY --from=builder /go/bin/serenity /usr/local/bin/serenity
-ENTRYPOINT ["serenity"]
+WORKDIR /data
+ENTRYPOINT ["serenity", "run", "-c", "/data/config.yaml"]
