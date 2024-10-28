@@ -8,7 +8,7 @@ import (
 	"github.com/sagernet/serenity/common/semver"
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/option"
-	"github.com/sagernet/sing-dns"
+	dns "github.com/sagernet/sing-dns"
 	"github.com/sagernet/sing/common"
 	BM "github.com/sagernet/sing/common/metadata"
 
@@ -106,6 +106,7 @@ func (t *Template) renderDNS(metadata M.Metadata, options *option.Options) error
 			Address: "fakeip",
 		})
 	}
+	options.DNS.Servers = append(options.DNS.Servers, t.PostServers...)
 	options.DNS.Rules = []option.DNSRule{
 		{
 			Type: C.RuleTypeDefault,

@@ -3,7 +3,7 @@ package option
 import (
 	C "github.com/sagernet/serenity/constant"
 	"github.com/sagernet/sing-box/option"
-	"github.com/sagernet/sing-dns"
+	dns "github.com/sagernet/sing-dns"
 	E "github.com/sagernet/sing/common/exceptions"
 	"github.com/sagernet/sing/common/json"
 )
@@ -24,6 +24,7 @@ type _Template struct {
 
 	// DNS
 	Servers        []option.DNSServerOptions `json:"servers,omitempty"`
+	PostServers    []option.DNSServerOptions `json:"post_servers,omitempty"`
 	DNS            string                    `json:"dns,omitempty"`
 	DNSLocal       string                    `json:"dns_local,omitempty"`
 	EnableFakeIP   bool                      `json:"enable_fakeip,omitempty"`
@@ -136,6 +137,7 @@ type ExtraGroup struct {
 	Type               string                          `json:"type,omitempty"`
 	Filter             option.Listable[string]         `json:"filter,omitempty"`
 	Exclude            option.Listable[string]         `json:"exclude,omitempty"`
+	PreOutbound        option.Listable[string]         `json:"pre_outbound,omitempty"`
 	CustomSelector     *option.SelectorOutboundOptions `json:"custom_selector,omitempty"`
 	CustomURLTest      *option.URLTestOutboundOptions  `json:"custom_urltest,omitempty"`
 }

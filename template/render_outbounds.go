@@ -137,9 +137,15 @@ func (t *Template) renderOutbounds(metadata M.Metadata, options *boxOption.Optio
 			return true
 		}
 		if extraGroup.Target != option.ExtraGroupTargetSubscription {
-			extraTags := common.Filter(common.FlatMap(subscriptions, func(it *subscription.Subscription) []string {
+			var extraTags []string
+			if len(extraGroup.PreOutbound) > 0 {
+				extraTags = append(extraTags, extraGroup.PreOutbound...)
+			}
+
+			extraTags = append(extraTags, common.Filter(common.FlatMap(subscriptions, func(it *subscription.Subscription) []string {
 				return common.Map(it.Servers, outboundToString)
-			}), myFilter)
+			}), myFilter)...)
+
 			if len(extraTags) == 0 {
 				continue
 			}
